@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>практикаjs_раздел_7</title>
+</head>
+<body>
+	<style>
+		body, input, button {
+			font-family: Arial;
+			color: aliceblue;
+			background-color: black;
+		}
+		.container {
+			position: relative;
+			max-width: 500px;
+			margin: 40px auto;
+			padding: 20px;
+			background-color: rgba(216, 223, 215, 0.445);
+			border: 1px solid white;
+		}
+		h2	{
+			margin-bottom: 40px;
+		}
+		
+		button {
+			display: block;
+			margin: 5px;
+			padding: 10px;
+			max-width: 100px;
+			box-sizing: border-box;
+		}
+		li {
+			list-style: none;
+			line-height: 125%;
+		}
+		.input {
+			display: block;
+			padding: 10px;
+			margin: 5px;
+		}
+		.invisible {
+			display: none;
+		}
+
+
+	</style>
+
+	<h1>Раздел 7</h1>
+	<div class="task-1 container">
+		<h2>Экранная клава</h2>
+	</div>
+	<script defer>
+		//_______________________________сброс инпута_________________________________________
+		function resetInput(inp) {
+			inp.addEventListener('focus', () => {
+				inp.value = '';
+			})
+		}
+	</script>
+	
+</body>
+</html>
