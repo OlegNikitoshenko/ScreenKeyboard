@@ -15,7 +15,7 @@
 		}
 		.container {
 			position: relative;
-			max-width: 500px;
+			max-width: 700px;
 			margin: 40px auto;
 			padding: 20px;
 			background-color: rgba(216, 223, 215, 0.445);
@@ -27,38 +27,205 @@
 		
 		button {
 			display: block;
-			margin: 5px;
-			padding: 10px;
-			max-width: 100px;
 			box-sizing: border-box;
-		}
-		li {
-			list-style: none;
-			line-height: 125%;
+			width: 50px;
+			height: 20px;
+			font-size: 10px;
+			border: none ;
+			line-height: 23px;
+			cursor: pointer;
 		}
 		.input {
+			box-sizing: border-box;
 			display: block;
+			padding: 10px 0;
+			margin: 10px auto;
+			width: 60%;
+			border-radius: 3px;
+		}
+		.keyboard {
+			box-sizing: border-box;
+			margin: 10px auto;
 			padding: 10px;
-			margin: 5px;
+			width: 60%;
+			height: 200px;
+			border: 1px solid rgb(8, 6, 6);
+			background-color: rgb(247, 247, 247);
+			border-radius: 3px;
+			-webkit-touch-callout: none; /* iOS Safari */
+			-webkit-user-select: none;   /* Chrome/Safari/Opera */
+			-khtml-user-select: none;    /* Konqueror */
+			-moz-user-select: none;      /* Firefox */
+			-ms-user-select: none;       /* Internet Explorer/Edge */
+			user-select: none;      
 		}
-		.invisible {
-			display: none;
+		.row {
+			margin: 5px auto;
+			display: flex;
+			width: 100%;
+			height: 17%;
+			background-color: fff;
 		}
-
-
+		.button, .spec {
+			background-color: rgb(7, 7, 7);
+			margin: 0 3px;
+			flex-basis: 25px;
+			height: 25px;
+			box-shadow:  -5px 5px 14px rgba(7, 7, 7, 0.75), -5px 5px 5px rgba(8, 6, 6, 0.43);
+			color: #fff;
+			line-height: 25px;
+			text-align: center;
+			font-size: 14px;
+			cursor: pointer;
+			border-radius: 3px;
+		}
+		.spec {
+			flex-basis: 50px;
+			font-size: 9px;
+		}
+		.red {
+			background-color: red;
+			
+		}
+		.upperCase {
+			text-transform: uppercase;
+		}
 	</style>
 
 	<h1>Раздел 7</h1>
-	<div class="task-1 container">
+	<div class="task-7 container">
 		<h2>Экранная клава</h2>
+		<div class="res"></div>
+		<input type="text" class="input">
+		<div class="keyboard"></div>
 	</div>
+
 	<script defer>
-		//_______________________________сброс инпута_________________________________________
-		function resetInput(inp) {
-			inp.addEventListener('focus', () => {
-				inp.value = '';
-			})
+		const input = document.querySelector('.input');
+		//_____________________________________________________create buttons__________________________________
+		const keyboard = document.querySelector('.keyboard');
+		const res = document.querySelector('.res');
+		const eng = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '-', '+', '='],
+			['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '{', '}', "@"],
+			['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', ':', '"',"'"],
+			['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?', '!', '*', '/']
+		];
+		const rus = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '-', '+', '='],
+			['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', "ъ", '!'],
+			['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', "э", "(", ')'],
+			['я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '?', ',', '.', ':']
+		];
+		const sym = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '-', '+', '='],
+			['!', '@', '#', '$', '%', '^', '&',  '(', ')', '[', "]", '*', '/'],
+			['~', '`', '|', "'\'", '{', '}', '<', '>', '№', "'", '"', ";", ':'],
+			[':-)', ':-(', ':-%)', ':-o', ':-/', ':-*', ':^D', ':-X ', '!', '?', ',', '.', '_']
+		];
+		const specKeys = ['shift', 'CAPS', 'lang', '/*!?', 'space', 'backspace', ''];
+		
+		const makeElem = (tag, className, parent) => {
+			let element;
+			element = document.createElement(tag);
+			element.classList.add(`${className}`);
+			parent.appendChild(element);
+			return element;
 		}
+		const makeKeyboard =  () => {
+			const buttons = [];
+			return  (rowsNum, elemsNum, tag, parentClass, childClass, parent) => {
+				for (let i = 0; i < rowsNum; i++) {
+					const row = makeElem(tag, parentClass, parent);
+					buttons[i] = [];
+					for (let j = 0; j <= elemsNum - 1; j++) {
+						buttons[i][j] = makeElem(tag, childClass, row);
+					}
+				}
+				return buttons;
+			}
+		}
+		const adCall1 = makeKeyboard();
+		const buttons = adCall1(4, 13, 'DIV', 'row', 'button', keyboard);
+		const adCall2 = makeKeyboard();
+		const specific = adCall2(1, 7, 'DIV', 'row', 'spec', keyboard);
+
+		const writeSpecific = ((buts, arr) => {
+			for (let i = 0; i < specific[0].length; i++) {
+				specific[0][i].innerHTML = arr[i];
+			}
+		})(specific, specKeys);
+		//____________________________Кнопка ENTER_______________________________
+		const enterButton = makeElem('button', "enter-button", specific[0][6]);
+		enterButton.innerHTML = 'ENTER';
+		enterButton.addEventListener('click', () => {
+			input.classList.toggle('red');
+		})
+		//__________________________________Смена языка______________________________
+		const switchLang = (buts, lang) => {
+			for (let i = 0; i < buts.length; i++) {
+				for (let j = 0; j < buts[i].length; j++) {
+					buts[i][j].innerHTML = lang[i][j];
+				}
+			}
+		}
+		//___________________________Основная часть____________________________________
+		let shift = true;
+		let caps = false;
+		let langEn = true;
+		switchLang(buttons, eng);
+		keyboard.classList.add('upperCase');
+		keyboard.addEventListener('click', ev => {
+			const dot = ['.', '!', '?'];
+			if (ev.target.classList.contains('button')){
+				if (!caps && !shift && !dot.includes(ev.target.innerHTML)) {
+					input.value += ev.target.innerHTML;
+					keyboard.classList.remove('upperCase');
+				} else if (caps) {
+					input.value = input.value + ev.target.innerHTML.toUpperCase();
+				} else if (shift) {
+					input.value = input.value + ev.target.innerHTML.toUpperCase();
+					shift = false;
+					keyboard.classList.remove('upperCase');
+				} else if (dot.includes(ev.target.innerHTML)) {
+					input.value += ev.target.innerHTML + ' ';
+					shift = true;
+					keyboard.classList.add('upperCase');
+				}
+			} else if (ev.target.innerHTML === 'space') {
+				input.value += ' ';
+			} else if (ev.target.innerHTML === 'backspace') {
+				input.value = input.value.slice(0, -1);
+			} else if (ev.target.innerHTML === 'lang'  ) {
+				if (langEn) {
+					switchLang(buttons, rus);
+					langEn = false;
+				} else {
+					switchLang(buttons, eng);
+					langEn = true;
+				} 
+			} else if (ev.target.innerHTML === '/*!?') {
+				if (langEn) {
+					langEn = false;
+				} else {
+					langEn = true;
+				}
+				switchLang(buttons, sym);
+			} else if (ev.target.innerHTML === 'CAPS') {
+				if (!caps) {
+					caps = true;
+					keyboard.classList.add('upperCase');
+				} else {
+					caps = false;
+					keyboard.classList.remove('upperCase');
+				}
+			} else if (ev.target.innerHTML === 'shift') {
+				if (!shift) {
+					keyboard.classList.add('upperCase');
+					shift = true;
+				} else {
+					keyboard.classList.remove('upperCase');
+					shift = false;
+				}
+			} 
+		})
 	</script>
 	
 </body>
